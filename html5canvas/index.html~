@@ -1,0 +1,12 @@
+<html>
+<head>
+<script src="zepto.min.js"></script>
+<script src="gameoflife.js"></script>
+</head>
+<body>
+<div style="text-align: center">
+<p style="font-size: 26px; font-family: Calibri, Tahoma; margin-bottom: 10px">Ispod nas je Game Of Life!</p>
+<canvas id="canvas" width=800 height=600>Nije HTML5, znaci nema canvasa</canvas> 
+</div>
+</body>
+</html>
