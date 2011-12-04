@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+
+<body>
+
+<canvas id="myCanvas" width="500" height="500">Your browser does not support the canvas tag.</canvas>
+
+<script type="text/javascript">
+
+var gridvalues = new Array(50);
+for (i=0; i<50; i+=1){
+	gridvalues[i] = new Array(50);
+	for (j=0; j<50; j+=1){
+		gridvalues[i][j] = randomNumber();		
+	}
+}
+
+var gridvaluesNextState = new Array(50);
+for (i=0; i<50; i+=1){
+	gridvaluesNextState[i] = new Array(50);	
+}
+
+
+var canvas=document.getElementById('myCanvas');
+var ctx=canvas.getContext('2d');
+ctx.fillStyle='#FF0000';
+var squareDimension = 10;
+
+for (i=0; i<500; i+=10){
+	for (j=0; j<500; j+=10){
+		ctx.fillStyle='#A1CBAE';
+		if (gridvalues[i/10][j/10]==0) 
+		{
+			ctx.fillRect(i,j,10,10);
+		}
+		ctx.strokeRect(i,j,10,10);
+	}
+}
+
+function drawNextState(){
+	for (i=0; i<50; i+=1){
+		for (j=0; j<50; j+=1){
+		var alive = 0;
+			i+=50; j+=50;
+			alive += gridvalues[(i-1)%50][(j-1)%50];
+			alive += gridvalues[i%50][(j-1)%50];
+			alive += gridvalues[(i+1)%50][(j-1)%50];
+			alive += gridvalues[(i-1)%50][j%50];
+			alive += gridvalues[(i+1)%50][j%50];
+			alive += gridvalues[(i-1)%50][(j+1)%50];
+			alive += gridvalues[i%50][(j+1)%50];
+			alive += gridvalues[(i+1)%50][(j+1)%50];
+			i-=50; j-=50;
+			if (gridvalues[i][j] == 1 && alive < 2) gridvaluesNextState[i][j] = 0;
+			else if (gridvalues[i][j] == 1 && (alive == 2 || alive ==3)) gridvaluesNextState[i][j] = 1;
+			else if (gridvalues[i][j] == 1 && alive > 3) gridvaluesNextState[i][j] = 0;
+			else if (gridvalues[i][j] == 0 && alive == 3) gridvaluesNextState[i][j] = 1;
+			else gridvaluesNextState[i][j] = 0;
+			
+		}	
+	}
+	
+	gridvalues = gridvaluesNextState;
+	for (i=0; i<500; i+=10){
+		for (j=0; j<500; j+=10){		
+			if (gridvalues[i/10][j/10]==0) 
+			{
+				ctx.fillStyle='#A1CBAE';
+				ctx.fillRect(i,j,10,10);
+			}
+			else
+			{
+				ctx.fillStyle='#FFFFFF';
+				ctx.fillRect(i,j,10,10);
+			}
+			
+			ctx.strokeRect(i,j,10,10);
+		}
+	}
+	
+	gridvaluesNextState = new Array(50);
+	for (i=0; i<50; i+=1){
+		gridvaluesNextState[i] = new Array(50);	
+	}
+	setTimeout("drawNextState()", 100);
+}
+
+function randomNumber(){
+	if (Math.random() > 0.5) return 1 
+	else return 0;
+}
+
+
+</script>
+<input type="button" id="start" name="start" value="Start" onclick="drawNextState()"></input>
+</body>
+
+</html>
+
