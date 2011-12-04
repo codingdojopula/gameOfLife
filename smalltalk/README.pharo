@@ -1,0 +1,17 @@
+Za učitati i pokrenuti riješenje zadatka u Pharo smalltalku:
+
+1)
+Skinuti Pharo smalltalk sa Seaside-om, može sa:
+http://www.seaside.st/distributions/Seaside-3.0.6-OneClick.zip
+ili bolje sa:
+http://jenkins.lukas-renggli.ch/view/Seaside%203.0/job/Seaside%203.0/lastSuccessfulBuild/artifact/Seaside-3.0-OneClick.zip
+
+...odzipati i pokrenuti.
+
+2)
+Evaluirati slijedeći smalltalk izraz:
+MCMczReader loadVersionFile: '/path/gdje/si/skinuo/CodingDojo-MilanMimica.1.mcz'.
+
+3)
+Uperiti browser na http://127.0.0.1:8080/app/gol
+
