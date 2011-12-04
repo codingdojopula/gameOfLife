@@ -3,7 +3,17 @@
 import random as mod_random
 import os as mod_os
 
-DEFAULT_SIZE = 50
+try:
+	DEFAULT_SIZE = int( raw_input( 'Size?' ) )
+except:
+	print 'Invalid values, using default...'
+	DEFAULT_SIZE = 40
+
+try:
+	RANDOM_DENSITY = int( raw_input( 'Random density (1-100)?' ) )
+except:
+	print 'Invalid values, using default...'
+	RANDOM_DENSITY = 30
 
 def new_array():
 	table = []
@@ -66,9 +76,9 @@ def print_table( table ):
 		for j in range( DEFAULT_SIZE ):
 			cell = table[ i ][ j ]
 			if cell:
-				result += '*'
+				result += '* '
 			else:
-				result += ' '
+				result += '  '
 		result += '|\n'
 	print result
 
@@ -77,7 +87,7 @@ table = new_array()
 # Fill with random values:
 for i in range( DEFAULT_SIZE ):
 	for j in range( DEFAULT_SIZE ):
-		table[ i ][ j ] = 1 if mod_random.randint( 0, 3 ) == 0 else 0
+		table[ i ][ j ] = 1 if mod_random.randint( 0, 100 ) <= RANDOM_DENSITY else 0
 
 for i in range( 1000000 ):
 	clear_screen()
