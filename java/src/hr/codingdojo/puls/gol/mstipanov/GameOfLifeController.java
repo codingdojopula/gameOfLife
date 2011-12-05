@@ -16,14 +16,15 @@ public class GameOfLifeController {
     private Cell[][] cells;
 
     public void next() {
-        Cell[][] cells = getCells();
         Cell[][] newCells = new Cell[MAX][MAX];
 
-        for (int y = 0; y < cells.length; y++) {
-            for (int x = 0; x < cells[y].length; x++) {
-                newCells[x][y] = new Cell(x, y);
-                Cell cell = newCells[x][y];
+        for (int y = 0; y < newCells.length; y++) {
+            for (int x = 0; x < newCells[y].length; x++) {
+                Cell cell = new Cell(x, y);
+                cell.setAlive(getCells()[x][y].isAlive());
                 cell.setAlive(getsToLive(cell));
+
+                newCells[x][y] = cell;
             }
         }
 
@@ -32,6 +33,7 @@ public class GameOfLifeController {
     }
 
     private boolean getsToLive(Cell cell) {
+
         int x = cell.getX();
         int y = cell.getY();
 
@@ -86,8 +88,7 @@ public class GameOfLifeController {
         for (int y = 0; y < cells.length; y++) {
             for (int x = 0; x < cells[y].length; x++) {
                 Cell cell = new Cell(x, y);
-                if (x >= 35 && x <= 65 && y >= 35 && y <= 65)
-                    cell.setAlive(random.nextBoolean());
+                cell.setAlive(random.nextInt(100) >= 70);
 
                 cells[x][y] = cell;
             }

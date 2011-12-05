@@ -41,20 +41,9 @@ public class GameOfLifePanel extends JPanel implements GameOfLifePresenter {
         for (int y = 0; y < cells.length; y++) {
             for (int x = 0; x < cells[y].length; x++) {
                 Cell cell = cells[x][y];
-                if (cell.isAlive())
-                    live(x, y);
-                else
-                    die(x, y);
+                fields.get(new Postiton(x, y)).setBackground(cell.isAlive() ? aliveColor : deadColor);
             }
         }
-    }
-
-    public void live(int x, int y) {
-        fields.get(new Postiton(x, y)).setBackground(aliveColor);
-    }
-
-    public void die(int x, int y) {
-        fields.get(new Postiton(x, y)).setBackground(deadColor);
     }
 
     public void show() {

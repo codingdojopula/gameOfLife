@@ -17,6 +17,8 @@ public class GameOfLifeButtonsPanel extends JPanel {
     private JButton nextButton;
     private JButton clearButton;
     private GameOfLifeController gameOfLifeController;
+    private JButton autoButton;
+    private Timer timer;
 
     public GameOfLifeButtonsPanel(GameOfLifeController gameOfLifeController) {
         this.gameOfLifeController = gameOfLifeController;
@@ -24,7 +26,8 @@ public class GameOfLifeButtonsPanel extends JPanel {
         add(new JPanel(), new GridBagConstraints(0, 0, 1, 100, 1., 1., GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         add(getClearButton(), new GridBagConstraints(1, 0, 1, 1, 1., 1., GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         add(getNextButton(), new GridBagConstraints(2, 0, 1, 1, 1., 1., GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        add(getExitButton(), new GridBagConstraints(3, 0, 1, 1, 1., 1., GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        add(getAutoButton(), new GridBagConstraints(3, 0, 1, 1, 1., 1., GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        add(getExitButton(), new GridBagConstraints(4, 0, 1, 1, 1., 1., GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
     }
 
     private JButton getExitButton() {
@@ -48,11 +51,39 @@ public class GameOfLifeButtonsPanel extends JPanel {
         nextButton = new JButton("Next");
         nextButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                getTimer().stop();
                 gameOfLifeController.next();
             }
         });
 
         return nextButton;
+    }
+
+    private JButton getAutoButton() {
+        if (null != autoButton)
+            return autoButton;
+
+        autoButton = new JButton("Auto");
+        autoButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gameOfLifeController.next();
+                getTimer().restart();
+            }
+        });
+
+        return autoButton;
+    }
+
+    private Timer getTimer() {
+        if (null != timer)
+            return timer;
+
+        timer = new Timer(500, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gameOfLifeController.next();
+            }
+        });
+        return timer;
     }
 
     private JButton getClearButton() {
@@ -62,6 +93,7 @@ public class GameOfLifeButtonsPanel extends JPanel {
         clearButton = new JButton("Clear");
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                getTimer().stop();
                 gameOfLifeController.clear();
             }
         });

@@ -9,9 +9,5 @@ import hr.codingdojo.puls.gol.mstipanov.Cell;
 public interface GameOfLifePresenter {
     void draw(Cell[][] cells);
 
-    void live(int x, int y);
-
-    void die(int x, int y);
-
     void show();
 }
